@@ -93,8 +93,8 @@ function App() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row p-4">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md mb-8 md:mb-0 md:mr-4 flex-shrink-0">
+    <div className="min-h-screen bg-gray-100 flex flex-col lg:flex-row p-4">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md mb-8 lg:mb-0 lg:mr-4 flex-shrink-0">
         {error && <div className="text-red-500 mb-4">{error}</div>}{" "}
         {/* Display error message */}
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -154,39 +154,40 @@ function App() {
           onChange={handleSearchChange}
           className="w-full mb-4 p-2 border rounded-md"
         />
-        <table className="w-full table-auto">
-          <thead>
-            <tr>
-              <th className="px-4 py-2">No</th>
-              <th className="px-4 py-2">Name</th>
-              <th className="px-4 py-2">ID Number</th>
-              <th className="px-4 py-2">Contact</th>
-              <th className="px-4 py-2">Occupation</th>
-              <th className="px-4 py-2">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredPersons.map((person, index) => (
-              <tr key={person.id} className="border-t">
-                {/* Changed to use person.id */}
-                <td className="px-4 py-2">{index + 1}</td>
-                <td className="px-4 py-2">{person.name}</td>
-                <td className="px-4 py-2">{person.idnumber}</td>{" "}
-                {/* Displaying the idnumber */}
-                <td className="px-4 py-2">{person.telephone}</td>
-                <td className="px-4 py-2">{person.occupation}</td>
-                <td className="px-4 py-2">
-                  <button
-                    onClick={() => handleDelete(person.id)}
-                    className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600 transition"
-                  >
-                    Delete
-                  </button>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full table-auto">
+            <thead>
+              <tr>
+                <th className="px-4 py-2">No</th>
+                <th className="px-4 py-2">Name</th>
+                <th className="px-4 py-2">ID Number</th>
+                <th className="px-4 py-2">Contact</th>
+                <th className="px-4 py-2">Occupation</th>
+                <th className="px-4 py-2">Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredPersons.map((person, index) => (
+                <tr key={person.id} className="border-t">
+                  <td className="px-4 py-2">{index + 1}</td>
+                  <td className="px-4 py-2">{person.name}</td>
+                  <td className="px-4 py-2">{person.idnumber}</td>{" "}
+                  {/* Displaying the idnumber */}
+                  <td className="px-4 py-2">{person.telephone}</td>
+                  <td className="px-4 py-2">{person.occupation}</td>
+                  <td className="px-4 py-2">
+                    <button
+                      onClick={() => handleDelete(person.id)}
+                      className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600 transition"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
