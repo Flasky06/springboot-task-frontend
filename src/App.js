@@ -10,11 +10,12 @@ function App() {
 
   const [persons, setPersons] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [error, setError] = useState(""); // State to hold error message
 
   const BACKEND_URL = "https://task-sever.onrender.com/api/persons";
 
   useEffect(() => {
-    fetchPersons(); //reload app
+    fetchPersons(); // reload app
   }, []);
 
   const fetchPersons = async () => {
@@ -39,8 +40,21 @@ function App() {
     setSearchTerm(e.target.value);
   };
 
+  const validateForm = () => {
+    const { name, occupation, idNumber, telephone } = formData;
+    if (!name || !occupation || !idNumber || !telephone) {
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) {
+      setError("All fields are required."); // Set error message
+      return;
+    }
+    setError(""); // Clear error message if validation passes
     try {
       await fetch(BACKEND_URL, {
         method: "POST",
@@ -80,6 +94,8 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-row justify-around p-4">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md mb-8">
+        {error && <div className="text-red-500 mb-4">{error}</div>}{" "}
+        {/* Display error message */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-gray-700">Name:</label>
