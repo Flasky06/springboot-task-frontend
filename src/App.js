@@ -11,13 +11,15 @@ function App() {
   const [persons, setPersons] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
+  const BACKEND_URL = "https://task-sever.onrender.com/api/persons";
+
   useEffect(() => {
-    fetchPersons(); // Reload app
+    fetchPersons(); //reload app
   }, []);
 
   const fetchPersons = async () => {
     try {
-      const response = await fetch("http://localhost:10000/api/persons");
+      const response = await fetch(BACKEND_URL);
       const data = await response.json();
       setPersons(data);
     } catch (error) {
@@ -40,7 +42,7 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await fetch("http://localhost:10000/api/persons", {
+      await fetch(BACKEND_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,7 +64,7 @@ function App() {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:10000/api/persons/${id}`, {
+      await fetch(`${BACKEND_URL}/${id}`, {
         method: "DELETE",
       });
       fetchPersons(); // Refresh the list after deletion
