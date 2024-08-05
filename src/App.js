@@ -23,6 +23,7 @@ function App() {
       const response = await fetch(BACKEND_URL);
       const data = await response.json();
       setPersons(data);
+      console.log(data);
     } catch (error) {
       console.error("Error fetching persons", error);
     }
@@ -92,8 +93,8 @@ function App() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-row justify-around p-4">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md mb-8">
+    <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row p-4">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md mb-8 md:mb-0 md:mr-4 flex-shrink-0">
         {error && <div className="text-red-500 mb-4">{error}</div>}{" "}
         {/* Display error message */}
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -139,13 +140,13 @@ function App() {
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded-md"
+            className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition"
           >
             Save
           </button>
         </form>
       </div>
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full flex-1">
         <input
           type="text"
           placeholder="Search here"
@@ -158,7 +159,7 @@ function App() {
             <tr>
               <th className="px-4 py-2">No</th>
               <th className="px-4 py-2">Name</th>
-              <th className="px-4 py-2">Id</th>
+              <th className="px-4 py-2">ID Number</th>
               <th className="px-4 py-2">Contact</th>
               <th className="px-4 py-2">Occupation</th>
               <th className="px-4 py-2">Action</th>
@@ -166,16 +167,18 @@ function App() {
           </thead>
           <tbody>
             {filteredPersons.map((person, index) => (
-              <tr key={index} className="border-t">
+              <tr key={person.id} className="border-t">
+                {/* Changed to use person.id */}
                 <td className="px-4 py-2">{index + 1}</td>
                 <td className="px-4 py-2">{person.name}</td>
-                <td className="px-4 py-2">{person.idNumber}</td>
+                <td className="px-4 py-2">{person.idnumber}</td>{" "}
+                {/* Displaying the idnumber */}
                 <td className="px-4 py-2">{person.telephone}</td>
                 <td className="px-4 py-2">{person.occupation}</td>
                 <td className="px-4 py-2">
                   <button
                     onClick={() => handleDelete(person.id)}
-                    className="bg-red-500 text-white px-2 py-1 rounded-md"
+                    className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600 transition"
                   >
                     Delete
                   </button>
