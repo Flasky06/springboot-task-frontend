@@ -12,12 +12,12 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    fetchPersons();
+    fetchPersons(); // Reload app
   }, []);
 
   const fetchPersons = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/persons");
+      const response = await fetch("http://localhost:10000/api/persons");
       const data = await response.json();
       setPersons(data);
     } catch (error) {
@@ -40,7 +40,7 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await fetch("http://localhost:8080/api/persons", {
+      await fetch("http://localhost:10000/api/persons", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,7 +62,7 @@ function App() {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:8080/api/persons/${id}`, {
+      await fetch(`http://localhost:10000/api/persons/${id}`, {
         method: "DELETE",
       });
       fetchPersons(); // Refresh the list after deletion
